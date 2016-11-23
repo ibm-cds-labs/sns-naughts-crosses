@@ -1,4 +1,4 @@
-var sns = new SNSClient("demokey", {
+var sns = new SNSClient("tyKwRGcA235rfD", {
   userData: {
     gameID: app.gameID
   },
