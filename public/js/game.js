@@ -46,11 +46,26 @@ var app = new Vue({
         o: false,
         x: false
       }
+    },
+    logs: [],
+    hideLogs: true
+  },
+  created: function() {
+    window.onbeforeunload = function() {
+      sns.send({gameID: app.gameID}, { action: "playerquit", id: sns.id })
     }
   },
   methods: {
+    toggleLogs: function() {
+      app.hideLogs = (app.hideLogs ? false : true );
+    },
     takeTurn: function(sqID) {
       
+      // make sure we have 2 players
+      if (!app.players.x || !app.players.o) {
+        return;
+      }
+
       // see if it's your turn
       if (app.players[app.turn] !== sns.id) {
         return;
@@ -180,6 +195,22 @@ var app = new Vue({
       if (app.players.x === id) {
         app.me = "x";
       }
+
+    },
+    quit: function(id) {
+
+      // create our URL
+      var url = "/game/" + app.gameID + "/remove/" + encodeURIComponent(id);
+
+      // make the call
+      this.$http.delete(url)
+      
+      // success
+      .then(function(res) {
+        sns.send({gameID: app.gameID}, { action: "playersync", data: res.data });
+        $('#playerLeft').modal('show');
+        app.turn = "o";
+      })
 
     }
   }

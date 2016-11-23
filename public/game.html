@@ -15,9 +15,9 @@
     <link href="/css/custom.css" rel="stylesheet">
 
     <script src="/js/vue.js"></script>
-    <script src="http://simple-notification.mybluemix.net/client.js"></script>
-    <script src="/js/vue-resource.min.js"></script>
+    <script src="http://localhost:6011/client.js"></script>
     <script src="/js/jquery-2.2.4.min.js"></script>
+    <script src="/js/vue-resource.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
 
   </head>
@@ -129,6 +129,24 @@
 
       </div>
 
+      <!-- Logs -->
+      <div class="row mt30">
+
+        <div class="col-lg-12">
+        
+          <hr>
+          <button class="btn btn-primary btn-lg" v-on:click="toggleLogs">Show/Hide logs</button>
+
+        </div>
+
+        <div class="col-lg-12 mt10" v-bind:class="{ hidden: hideLogs }">
+
+          <pre v-for="log in logs">{{ log }}</pre>
+          
+        </div>
+
+      </div>
+
       <!-- Modal -->
       <div class="modal fade" id="gameOver" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
@@ -138,6 +156,24 @@
             </div>
             <div class="modal-body">
               This game ended as a {{ ( status == "d" ? "draw" : "win for " + turn.toUpperCase() ) }}!!
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" v-on:click="cancel">Cancel</button>
+              <button type="button" class="btn btn-primary" v-on:click="reset">Play Again!</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal -->
+      <div class="modal fade" id="playerLeft" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="myModalLabel">Game over!</h4>
+            </div>
+            <div class="modal-body">
+              Unfortunately the other player left the game, so we've had to stop!
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" v-on:click="cancel">Cancel</button>

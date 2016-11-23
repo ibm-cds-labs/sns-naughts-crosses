@@ -1,4 +1,4 @@
-var sns = new SNSClient("tyKwRGcA235rfD", {
+var sns = new SNSClient("demokey", {
   userData: {
     gameID: app.gameID
   },
@@ -12,6 +12,8 @@ sns.on('connected', function() {
 })
 
 sns.on('notification', function(n) {
+
+  app.logs.unshift(JSON.stringify(n, null, 2));
 
   switch(n.action) {
 
@@ -29,6 +31,7 @@ sns.on('notification', function(n) {
 
       if (winner) {
         app.status = app.turn;
+        app.turn = (app.turn === "o" ? "x" : "o");
         $('#gameOver').modal('show');
         return;
       }
@@ -37,12 +40,13 @@ sns.on('notification', function(n) {
 
       if (draw) {
         app.status = "d";
+        app.turn = (app.turn === "o" ? "x" : "o");
         $('#gameOver').modal('show');
         return;
       }
 
-      // alternate whos turn it is
       app.turn = (app.turn === "o" ? "x" : "o");
+
       break;
 
     case "reset":
@@ -53,10 +57,15 @@ sns.on('notification', function(n) {
         app.status = "";
       }
       $('#gameOver').modal('hide');
+      $('#playerLeft').modal('hide');
       break;
 
     case "cancel":
       window.location = "/";
+      break;
+
+    case "playerquit":
+      app.quit(n.id)
       break;
   }
 
