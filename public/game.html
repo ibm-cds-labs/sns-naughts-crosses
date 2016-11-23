@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Naughts &amp; Crosses</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/custom.css" rel="stylesheet">
+
+    <script src="/js/vue.js"></script>
+    <script src="http://localhost:6011/client.js"></script>
+    <script src="/js/vue-resource.min.js"></script>
+    <script src="/js/jquery-2.2.4.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+
+  </head>
+
+  <body>
+
+    <div class="container" id="app">
+      <div class="header">
+        <h3>Naughts &amp; Crosses <span class="pull-right"><span class="label label-info">Game ID: {{ gameID }}</span></span></h3>
+        <hr>
+      </div>
+
+      <div class="row">
+
+        <div class="col-sm-4 col-xs-4">
+          
+          <h4 v-if="!players.o"><span class="label label-info block">Waiting for 'O'</span></h4>
+          <h4 v-else><span class="label label-info block">'O' is here</span></h4>
+        
+        </div>
+        <div class="col-sm-4 col-xs-4">
+
+          <h4 v-if="me == turn && players.o && players.x">
+            <span class="label label-danger block">Your turn!</span>
+          </h4>
+
+        </div>
+        <div class="col-sm-4 col-xs-4">
+          
+          <h4 v-if="!players.x"><span class="label label-success block">Waiting for 'X'</span></h4>
+          <h4 v-else><span class="label label-success block">'X' is here</span></h4>
+
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-lg-3 hidden-md hidden-xs hidden-sm">
+          
+          
+
+        </div>
+
+        <div class="col-lg-2 col-sm-4 col-xs-4">
+          <div class="square" v-bind:class="squares[0]" v-on:click="takeTurn(0)"></div>
+        </div>
+
+        <div class="col-lg-2 col-sm-4 col-xs-4">
+          <div class="square" v-bind:class="squares[1]" v-on:click="takeTurn(1)"></div>
+        </div>
+
+        <div class="col-lg-2 col-sm-4 col-xs-4">
+          <div class="square" v-bind:class="squares[2]" v-on:click="takeTurn(2)"></div>
+        </div>
+
+        <div class="col-lg-3 hidden-md hidden-xs hidden-sm">
+        </div>
+
+      </div>
+
+      <!-- Row 2 -->
+      <div class="row mt30">
+
+        <div class="col-lg-3 hidden-md hidden-xs hidden-sm">
+          
+        </div>
+
+        <div class="col-lg-2 col-sm-4 col-xs-4">
+          <div class="square" v-bind:class="squares[3]" v-on:click="takeTurn(3)"></div>
+        </div>
+
+        <div class="col-lg-2 col-sm-4 col-xs-4">
+          <div class="square" v-bind:class="squares[4]" v-on:click="takeTurn(4)"></div>
+        </div>
+
+        <div class="col-lg-2 col-sm-4 col-xs-4">
+          <div class="square" v-bind:class="squares[5]" v-on:click="takeTurn(5)"></div>
+        </div>
+
+        <div class="col-lg-3 hidden-md hidden-xs hidden-sm">
+          
+        </div>
+
+      </div>
+
+      <!-- Row 3 -->
+      <div class="row mt30">
+
+        <div class="col-lg-3 hidden-md hidden-xs hidden-sm">
+          
+        </div>
+
+        <div class="col-lg-2 col-sm-4 col-xs-4">
+          <div class="square" v-bind:class="squares[6]" v-on:click="takeTurn(6)"></div>
+        </div>
+
+        <div class="col-lg-2 col-sm-4 col-xs-4">
+          <div class="square" v-bind:class="squares[7]" v-on:click="takeTurn(7)"></div>
+        </div>
+
+        <div class="col-lg-2 col-sm-4 col-xs-4">
+          <div class="square" v-bind:class="squares[8]" v-on:click="takeTurn(8)"></div>
+        </div>
+
+        <div class="col-lg-3 hidden-md hidden-xs hidden-sm">
+          
+        </div>
+
+      </div>
+
+      <!-- Modal -->
+      <div class="modal fade" id="gameOver" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="myModalLabel">Game over!</h4>
+            </div>
+            <div class="modal-body">
+              This game ended as a {{ ( status == "d" ? "draw" : "win for " + turn.toUpperCase() ) }}!!
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" v-on:click="cancel">Cancel</button>
+              <button type="button" class="btn btn-primary" v-on:click="reset">Play Again!</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <script src="/js/game.js"></script>
+    <script src="/js/sns.js"></script>
+
+  </body>
+</html>

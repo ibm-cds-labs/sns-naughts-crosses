@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Naughts &amp; Crosses</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/custom.css" rel="stylesheet">
+
+    <script src="/js/vue.js"></script>
+    <script src="/js/vue-resource.min.js"></script>
+    <script src="/js/jquery-2.2.4.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script>
+
+      // when page is ready
+      var app;
+      $(document).ready(function() {
+
+        app = new Vue({
+          el: '#app',
+          methods: {
+            startGame: function() {
+
+              // make API request to start a new game
+              this.$http.post('/game').then(function(response) {
+                
+                // if we have a successful response, redirect to new game window
+                if (typeof response == "object" && typeof response.data == "object" && response.data.success) {
+                  return window.location = "/game/" + response.data.id;
+                }
+
+                // otherwise alert error
+                alert("Unable to create game")
+
+              },
+              // error handler
+              function(response) {
+                
+                alert("Unable to create game")
+
+              });
+            },
+            joinGame: function() {
+
+              var id = document.getElementById("gameID").value;
+
+              if (typeof id == "string" && id !== "") {
+                return window.location = "/game/" + id
+              }
+
+              alert("Please enter a game ID")
+
+            }
+          }
+          
+        })
+
+      });
+      
+    </script>
+
+  </head>
+
+  <body>
+
+    <div class="container" id="app">
+      <div class="header">
+        <h3>Naughts &amp; Crosses</h3>
+        <hr>
+      </div>
+
+      <div class="row">
+
+        <div class="col-lg-12">
+          <p>Welcome to <em>Naughts &amp; Crosses</em>, a multiplayer online game created with the <a href="https://github.com/ibm-cds-labs/simple-notification-service" target="_blank">Simple Notification Service</a>.</p>
+
+          <p>Click the create button below to start a new game, or if you already have a game ID,  type it into the box below and click &quot;Join!&quot;</p>
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-lg-6">
+          
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <h3 class="mt0">Start a new game</h3>
+              <button class="btn btn-lg btn-success" v-on:click="startGame">Start New Game</button>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-lg-6">
+          
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <h3 class="mt0">Join an existing game</h3>
+              <input type="text" class="form-control" name="gameID" id="gameID">
+              <button class="btn btn-lg btn-info mt20" v-on:click="joinGame">Join Game</button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,45 @@
+.mt0 {
+	margin-top: 0;
+}
+
+.mt10 {
+	margin-top: 10px;
+}
+
+.mt20 {
+	margin-top: 20px;
+}
+
+.mt30 {
+	margin-top: 30px;
+}
+
+.block {
+	display: block;
+}
+
+.square {
+	height: 165px;
+	background: #ddd;
+	cursor: pointer;
+}
+
+.square.o {
+	background: url('/img/o.png') no-repeat center center;
+	cursor: not-allowed;
+}
+
+.square.o.win {
+	background: url('/img/o.png') no-repeat center center #fdd;
+	cursor: not-allowed;
+}
+
+.square.x {
+	background: url('/img/x.png') no-repeat center center;
+	cursor: not-allowed;
+}
+
+.square.x.win {
+	background: url('/img/x.png') no-repeat center center #fdd;
+	cursor: not-allowed;
+}

@@ -1,0 +1,25 @@
+{
+  "name": "sns-naughts-crosses",
+  "version": "1.0.0",
+  "description": "A Multiplayer naughts and crosses game mae with the Simple Notification Service",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MattCollins84/sns-naughts-crosses.git"
+  },
+  "author": "Matt Collins (matt@strikesandgutters.com)",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/MattCollins84/sns-naughts-crosses/issues"
+  },
+  "homepage": "https://github.com/MattCollins84/sns-naughts-crosses#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "cfenv": "^1.0.3",
+    "express": "^4.14.0",
+    "underscore": "^1.8.3"
+  }
+}
