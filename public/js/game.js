@@ -9,6 +9,7 @@ var app = new Vue({
       x: null
     },
     me: null,
+    check: new Audio('/img/check.ogg'),
     squares: {
       0: {
         o: false,
@@ -51,6 +52,7 @@ var app = new Vue({
     hideLogs: true
   },
   created: function() {
+    this.check.volume = 0.1;
     window.onbeforeunload = function() {
       sns.send({gameID: app.gameID}, { action: "playerquit", id: sns.id })
     }
@@ -66,7 +68,7 @@ var app = new Vue({
         return;
       }
 
-      // see if it's your turn
+      // make sure its this players turn
       if (app.players[app.turn] !== sns.id) {
         return;
       }
@@ -198,6 +200,10 @@ var app = new Vue({
 
     },
     quit: function(id) {
+
+      if (id !== app.players.o && id !== app.players.x) {
+        return;
+      }
 
       // create our URL
       var url = "/game/" + app.gameID + "/remove/" + encodeURIComponent(id);

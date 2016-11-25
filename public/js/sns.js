@@ -25,6 +25,7 @@ sns.on('notification', function(n) {
     case "turn":
       // mark this square as played
       app.squares[n.square][n.player] = true;
+      app.check.play();
       
       // check for winning combos for this player
       var winner = app.checkWinners(app.turn);
