@@ -1,7 +1,7 @@
 "use strict"
 
 /*****
-	Express and Socket.IO
+	Express and environment
 *****/
 const express = require('express');
 const app = express();
@@ -20,6 +20,7 @@ const bpUrlencoded = bodyParser.urlencoded({ extended: true});
 *****/
 const _ = require('underscore');
 const games = {} // collection of games
+
 /*****
 	API endpoints
 *****/
