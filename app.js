@@ -28,9 +28,11 @@ const games = {} // collection of games
 // create a new game
 app.post('/game', bpJSON, (req, res) => {
 
+	// create an ID of 14 random chars
 	let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".split("");
 	let id = _.shuffle(chars).splice(0, 14).join("")
 
+	// create game object
 	games[id] = {
 		o: null,
 		x: null
@@ -43,8 +45,11 @@ app.post('/game', bpJSON, (req, res) => {
 
 });
 
+// register a player in a game
 app.post('/game/:id/register/:playerid', bpJSON, (req, res) => {
 
+	// make sure we have this game object
+	// create if not there
 	if (typeof games[req.params.id] != "object") {
 		games[req.params.id] = {
 			o: null,
@@ -52,24 +57,30 @@ app.post('/game/:id/register/:playerid', bpJSON, (req, res) => {
 		}
 	}
 
+	// if both players are assigned, return game object
 	if (games[req.params.id].o && games[req.params.id].x) {
 		return res.send(games[req.params.id])
 	}
 
+	// if o is not assigned, assign this player
 	if (games[req.params.id].o === null) {
 		games[req.params.id].o = req.params.playerid;
 	}
 
+	// else, if x is not assigned, assign this player
 	else if (games[req.params.id].x === null) {
 		games[req.params.id].x = req.params.playerid;
 	}
 
+	// return game object
 	return res.send(games[req.params.id])
 
-})
+});
 
+// remove player from game
 app.delete('/game/:id/remove/:playerid', bpJSON, (req, res) => {
 
+	// if this game does not exist, then return empty game object
 	if (typeof games[req.params.id] != "object") {
 		return res.send({
 			o: null,
@@ -77,14 +88,17 @@ app.delete('/game/:id/remove/:playerid', bpJSON, (req, res) => {
 		})
 	}
 
+	// if this player is assigned to o, remove
 	if (games[req.params.id].o === req.params.playerid) {
 		games[req.params.id].o = null;
 	}
 
+	// else if assigned to x, remove
 	else if (games[req.params.id].x === req.params.playerid) {
 		games[req.params.id].x = null;
 	}
 
+	// return game object
 	return res.send(games[req.params.id])
 
 })
@@ -93,10 +107,12 @@ app.delete('/game/:id/remove/:playerid', bpJSON, (req, res) => {
 	FRONT END
 *****/
 
+// homepage
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
 });
 
+// game page
 app.get('/game/:id', (req, res) => {
   res.sendFile(__dirname + '/public/game.html');
 });
