@@ -32,7 +32,6 @@ sns.on('notification', function(n) {
 
       if (winner) {
         app.status = app.turn;
-        app.turn = (app.turn === "o" ? "x" : "o");
         $('#gameOver').modal('show');
         return;
       }
@@ -57,6 +56,7 @@ sns.on('notification', function(n) {
         app.squares[i].win = false;
         app.status = "";
       }
+      app.turn = (app.turn === "o" ? "x" : "o");
       $('#gameOver').modal('hide');
       $('#playerLeft').modal('hide');
       break;
